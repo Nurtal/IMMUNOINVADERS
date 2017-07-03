@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import pygame
 from screens.game import Game
+from screens.survival import Survival
 from screens.menu import GameMenu
 from screens.settings import GameSettings
 
@@ -14,7 +15,7 @@ bg_color = (0, 0, 0)
 
 # Game Menu
 pygame.display.set_caption('Game Menu')
-menu_items = ('Start', 'Settings', 'Quit')
+menu_items = ('Start','Survival', 'Settings', 'Quit')
 
 # Views initialization
 gm = GameMenu(screen, menu_items)
@@ -37,6 +38,15 @@ while mainloop:
 		g = Game(screen)
 		g.run()
 		gm.start_selected = False
+		gm.survival_selected = False
+		gm.quit_select = False
+
+	if gm.survival_selected:
+		pygame.display.set_caption('Survival')
+		gs = Survival(screen)
+		gs.run()
+		gm.start_selected = False
+		gm.survival_selected = False
 		gm.quit_select = False
 
 	if gm.settings_selected:

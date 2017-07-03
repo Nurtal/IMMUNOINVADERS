@@ -35,6 +35,7 @@ class GameMenu:
 		self.paddingy = 20
 
 		self.start_selected = False
+		self.survival_selected = False
 		self.settings_selected = False
 		self.quit_select = False
 
@@ -91,6 +92,9 @@ class GameMenu:
 						if len(self.current_item) > 0:
 							if self.current_item[0] == "Start":
 								self.start_selected = True
+
+							elif self.current_item[0] == "Survival":
+								self.survival_selected = True
 
 							elif self.current_item[0] == "Settings":
 								self.settings_selected = True
