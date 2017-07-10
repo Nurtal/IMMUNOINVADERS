@@ -32,6 +32,7 @@ class Survival:
 		self.font = pygame.font.SysFont(None, 100)
 		self.label_game_over = self.font.render("Game Over", 1, (255, 255, 255))
 		self.label_victory = self.font.render("Victory is yours", 1, (255, 255, 255))
+		self.label_new_wave = self.font.render("New Wave !", 1, (255, 255, 255))
 
 		# Life Bar
 		self.lifes = []
@@ -237,23 +238,28 @@ class Survival:
 				self.screen.blit(life.image, life.sprite)
 
 			if self.victory:
+			
+				# New wave messages
+				self.screen.blit(
+					self.label_new_wave,
+					(
+						self.scr_width / 2 - self.label_new_wave.get_rect().width / 2,
+						self.scr_height / 2 - self.label_new_wave.get_rect().height / 2
+					)	
+				)
 
-				self.victory = False
+				pygame.display.flip()
+
+				pygame.time.delay(1000)
+
 				# Init Invaders
 				self.init_x = 10
 				for i in range(self.invaders_number):
 					self.invaders.append(Invader((self.init_x, 10)))
 					self.init_x += 50
 
-				"""
-				self.screen.blit(
-					self.label_victory,
-					(
-						self.scr_width / 2 - self.label_victory.get_rect().width / 2,
-						self.scr_height / 2 - self.label_victory.get_rect().height / 2
-					)	
-				)
-				"""
+				self.victory = False
+
 
 			if self.game_over:
 				self.screen.blit(
