@@ -237,13 +237,23 @@ class Survival:
 				self.screen.blit(life.image, life.sprite)
 
 			if self.victory:
+
+				self.victory = False
+				# Init Invaders
+				self.init_x = 10
+				for i in range(self.invaders_number):
+					self.invaders.append(Invader((self.init_x, 10)))
+					self.init_x += 50
+
+				"""
 				self.screen.blit(
 					self.label_victory,
 					(
 						self.scr_width / 2 - self.label_victory.get_rect().width / 2,
 						self.scr_height / 2 - self.label_victory.get_rect().height / 2
-					)
+					)	
 				)
+				"""
 
 			if self.game_over:
 				self.screen.blit(
