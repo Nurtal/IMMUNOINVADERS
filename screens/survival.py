@@ -34,6 +34,9 @@ class Survival:
 		self.label_victory = self.font.render("Victory is yours", 1, (255, 255, 255))
 		self.label_new_wave = self.font.render("New Wave !", 1, (255, 255, 255))
 
+		## Score
+		self.score = 0
+
 		# Life Bar
 		self.lifes = []
 		self.lifes_number = 3
@@ -76,6 +79,9 @@ class Survival:
 		# Time for invader bullet vertical moving
 		self.timecount = 0
 
+		## Init score count
+		self.init_score_x = self.scr_width - 180
+
 		# Init Invaders
 		self.init_x = 10
 		for i in range(self.invaders_number):
@@ -84,10 +90,11 @@ class Survival:
 
 		# Init life bar
 		self.init_life_x = self.scr_width - 120
-
 		for i in range(self.lifes_number):
 			self.lifes.append(Life((self.init_life_x, 0)))
 			self.init_life_x += 40
+
+
 
 	def run(self):
 		mainloop = True
@@ -160,6 +167,8 @@ class Survival:
 					):
 						item_to_remove = i
 						self.invader_exploding = True
+						self.score += 1
+
 					else:
 						if self.invaders_moving and not self.game_over:
 							invader.sprite.y += 15
@@ -196,7 +205,6 @@ class Survival:
 			self.timecount += self.clock.get_time()
 
 			# Handle the bullet shot by the random invader
-
 			if self.timecount > self.nasty_shoot_time and self.has_already_chosen:
 				self.timecount = 0
 				self.has_already_chosen = False
@@ -259,6 +267,18 @@ class Survival:
 					self.init_x += 50
 
 				self.victory = False
+
+
+			## Display score
+			"""
+			pygame.draw.rect(
+				self.screen, (255, 255, 255), [self.scr_width - 190, 70, 120, 70], 1
+			)
+			"""
+
+			self.label_score = self.font.render(str(self.score), 1, (255, 255, 255))
+			self.screen.blit(self.label_score, [self.scr_width - 90, 70, 120, 40])
+
 
 
 			if self.game_over:
