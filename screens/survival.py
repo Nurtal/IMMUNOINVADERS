@@ -115,8 +115,6 @@ class Survival:
 				if event.type == pygame.QUIT:
 					sys.exit()
 
-
-
 			# Keyboard Events
 			keys = pygame.key.get_pressed()
 
