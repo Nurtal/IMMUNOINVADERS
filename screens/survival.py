@@ -1,12 +1,19 @@
 #!/usr/bin/python3
 import sys
 import pygame
+
+from pygame.locals import *
+
 from random import randint
 from classes.player import Player
 from classes.bullet import Bullet
 from classes.ennemybullet import EnnemyBullet
 from classes.invader import Invader
 from classes.life import Life
+
+
+
+import eztext
 
 pygame.init()
 
@@ -270,16 +277,8 @@ class Survival:
 
 
 			## Display score
-			"""
-			pygame.draw.rect(
-				self.screen, (255, 255, 255), [self.scr_width - 190, 70, 120, 70], 1
-			)
-			"""
-
 			self.label_score = self.font.render(str(self.score), 1, (255, 255, 255))
 			self.screen.blit(self.label_score, [self.scr_width - 90, 70, 120, 40])
-
-
 
 			if self.game_over:
 				self.screen.blit(
@@ -289,6 +288,32 @@ class Survival:
 						self.scr_height / 2 - self.label_game_over.get_rect().height / 2
 					)
 				)
+
+
+				## Get the player name
+				## TODO: embellir le truc
+				clock = pygame.time.Clock()
+				player_name = ""
+				txtbx = eztext.Input(maxlength=45, color=(255,0,0), prompt='Enter Your Name : ')
+				while 1:
+					clock.tick(30)
+					events = pygame.event.get()
+					for event in events:
+
+						if event.type == pygame.KEYDOWN:
+							if event.key == pygame.K_RETURN:
+								player_name = str(txtbx.value)
+								## Write player name and score in scores file
+								score_file = open("resources/scores.csv", "a")
+								score_file.write(str(player_name)+","+str(self.score)+"\n")
+								score_file.close()
+								return
+						elif event.type == QUIT:
+							return
+					self.screen.fill((255,255,255))
+					txtbx.update(events)
+					txtbx.draw(self.screen)
+					pygame.display.flip()
 
 
 			pygame.display.flip()
