@@ -292,7 +292,7 @@ class Survival:
 				## TODO: embellir le truc
 				clock = pygame.time.Clock()
 				player_name = ""
-				txtbx = eztext.Input(maxlength=45, color=(255,0,0), prompt='Enter Your Name : ')
+				txtbx = eztext.Input(maxlength=45, color=(255,255,255), prompt="Enter Your Name: ")
 				while 1:
 					clock.tick(30)
 					events = pygame.event.get()
@@ -308,7 +308,7 @@ class Survival:
 								return
 						elif event.type == QUIT:
 							return
-					self.screen.fill((255,255,255))
+					self.screen.fill((0,76,153))
 					txtbx.update(events)
 					txtbx.draw(self.screen)
 					pygame.display.flip()
