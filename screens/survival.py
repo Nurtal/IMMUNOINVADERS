@@ -9,6 +9,7 @@ from classes.player import Player
 from classes.bullet import Bullet
 from classes.ennemybullet import EnnemyBullet
 from classes.invader import Invader
+from classes.invader2 import Invader2
 from classes.life import Life
 
 
