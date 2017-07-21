@@ -49,9 +49,8 @@ class Survival:
 		self.lifes = []
 		self.lifes_number = 3
 
-		# Invaders
+		## Invaders
 		self.invaders = []
-		self.invaders_number = 10
 
 		# Spaceship and bullets
 		self.player = Player(self.screen_size)
@@ -90,11 +89,21 @@ class Survival:
 		## Init score count
 		self.init_score_x = self.scr_width - 180
 
-		# Init Invaders
+		## Init Invaders
+		wave_line = []
+		position_taken = []
 		self.init_x = 10
-		for i in range(self.invaders_number):
-			self.invaders.append(Invader((self.init_x, 10)))
-			self.init_x += 50
+		self.number_of_ennemy = 10
+
+		for i in range(0, self.number_of_ennemy):
+			flip_the_coin = randint(0,100)
+			if(flip_the_coin > 50):
+				self.invaders.append(Invader((self.init_x, 10)))
+				self.init_x += 50
+			else:
+				self.invaders.append(Invader2((self.init_x , 10)))
+				self.init_x += 70
+
 
 		# Init life bar
 		self.init_life_x = self.scr_width - 120
@@ -266,11 +275,17 @@ class Survival:
 
 				pygame.time.delay(1000)
 
-				# Init Invaders
+				## Init Invaders
 				self.init_x = 10
-				for i in range(self.invaders_number):
-					self.invaders.append(Invader((self.init_x, 10)))
-					self.init_x += 50
+				self.number_of_ennemy = 10
+				for i in range(0, self.number_of_ennemy):
+					flip_the_coin = randint(0,100)
+					if(flip_the_coin > 50):
+						self.invaders.append(Invader((self.init_x, 10)))
+						self.init_x += 50
+					else:
+						self.invaders.append(Invader2((self.init_x , 10)))
+						self.init_x += 70
 
 				self.victory = False
 
