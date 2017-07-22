@@ -37,6 +37,7 @@ class GameMenu:
 		self.start_selected = False
 		self.survival_selected = False
 		self.settings_selected = False
+		self.scores_selected = False
 		self.quit_select = False
 
 		self.index_selected = 0
@@ -98,6 +99,9 @@ class GameMenu:
 
 							elif self.current_item[0] == "Settings":
 								self.settings_selected = True
+
+							elif self.current_item[0] == "Scores":
+								self.scores_selected = True
 
 							elif self.current_item[0] == "Quit":
 								self.quit_select = True

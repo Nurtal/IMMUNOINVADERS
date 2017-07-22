@@ -4,6 +4,7 @@ from screens.game import Game
 from screens.survival import Survival
 from screens.menu import GameMenu
 from screens.settings import GameSettings
+from screens.scoreTable import ScoreTable
 
 pygame.init()
 
@@ -15,7 +16,7 @@ bg_color = (0, 0, 0)
 
 # Game Menu
 pygame.display.set_caption('Game Menu')
-menu_items = ('Start','Survival', 'Settings', 'Quit')
+menu_items = ('Start','Survival', 'Settings','Scores','Quit')
 
 # Views initialization
 gm = GameMenu(screen, menu_items)
@@ -31,7 +32,7 @@ while mainloop:
 		gm.run()
 		if g is not None:
 			g.escape_selected = False
-		gs.escape_selected = False
+		#gs.escape_selected = False
 
 	if gm.start_selected:
 		pygame.display.set_caption('Game')
@@ -39,18 +40,31 @@ while mainloop:
 		g.run()
 		gm.start_selected = False
 		gm.survival_selected = False
+		gm.scores_selcted = False
 		gm.quit_select = False
 
 	if gm.survival_selected:
 		pygame.display.set_caption('Survival')
-		gs = Survival(screen)
+		gsu = Survival(screen)
+		gsu.run()
+		gm.start_selected = False
+		gm.survival_selected = False
+		gm.scores_selected = False
+		gm.quit_select = False
+
+	if gm.scores_selected:
+		gs = ScoreTable(screen)
 		gs.run()
 		gm.start_selected = False
 		gm.survival_selected = False
-		gm.quit_select = False
+		gm.settings_selected = False
+		gm.scores_selected = False
 
 	if gm.settings_selected:
 		gs.run()
+		gm.start_selected = False
+		gm.survival_selected = False
+		gm.scores_selceted = False
 		gm.settings_selected = False
 
 	if gm.quit_select is True:
