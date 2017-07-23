@@ -8,3 +8,4 @@ class Invader(GameObject):
 
         super(Invader, self).__init__("./resources/images/invader.png")
         self.init_pos(pos)
+        self.hp = 1

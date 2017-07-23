@@ -12,3 +12,4 @@ class Invader2(GameObject):
 
         super(Invader2, self).__init__("./resources/images/hepatite.png")
         self.init_pos(pos)
+        self.hp = 2

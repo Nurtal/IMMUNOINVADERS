@@ -77,6 +77,11 @@ class Survival:
 		self.invaders_moving = False
 		self.invader_exploding = False
 
+		## Weapons
+		self.weapons_list = ["slow", "fast"]
+		self.current_weapon = "slow"
+		self.current_weapon_index = 0
+
 		# Time Variables
 		self.clock = pygame.time.Clock()
 
@@ -138,6 +143,13 @@ class Survival:
 					self.bullet.sprite.x += 10
 			elif keys[pygame.K_SPACE]:
 				self.player.shoot = True
+			elif keys[pygame.K_RSHIFT]:
+				number_of_weapon = len(self.weapons_list)
+				if(self.current_weapon_index == number_of_weapon-1):
+					self.current_weapon_index = 0
+				else:
+					self.current_weapon_index += 1				
+				self.current_weapon = self.weapons_list[self.current_weapon_index]
 			elif keys[pygame.K_ESCAPE]:
 				# Go back to the game menu
 				mainloop = False
@@ -151,7 +163,10 @@ class Survival:
 
 				if self.bullet.sprite.y > 0 and self.invader_exploding is False:
 					self.player.shooting = True
-					self.bullet.sprite = self.bullet.sprite.move([0, -6])
+					if self.current_weapon == "slow":
+						self.bullet.sprite = self.bullet.sprite.move([0, -5])
+					elif self.current_weapon == "fast":
+						self.bullet.sprite = self.bullet.sprite.move([0, -14])
 				else:
 					self.laser_sound.fadeout(1000)
 					self.bullet.sprite.x, self.bullet.sprite.y = (
@@ -180,7 +195,11 @@ class Survival:
 					if invader.sprite.collidepoint(
 						self.bullet.sprite.x, self.bullet.sprite.y
 					):
-						item_to_remove = i
+
+						invader.hp -= 1
+						if(invader.hp <= 0):
+							item_to_remove = i
+						
 						self.invader_exploding = True
 						self.score += 1
 
