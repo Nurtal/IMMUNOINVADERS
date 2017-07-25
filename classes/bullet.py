@@ -8,3 +8,4 @@ class Bullet(GameObject):
 
 		super(Bullet, self).__init__("./resources/images/bullet.png")
 		self.init_pos(pos)
+		self.power = 1

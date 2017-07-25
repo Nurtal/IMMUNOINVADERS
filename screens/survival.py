@@ -165,8 +165,10 @@ class Survival:
 					self.player.shooting = True
 					if self.current_weapon == "slow":
 						self.bullet.sprite = self.bullet.sprite.move([0, -5])
+						self.bullet.power = 2
 					elif self.current_weapon == "fast":
 						self.bullet.sprite = self.bullet.sprite.move([0, -14])
+						self.bullet.power = 1
 				else:
 					self.laser_sound.fadeout(1000)
 					self.bullet.sprite.x, self.bullet.sprite.y = (
@@ -196,7 +198,7 @@ class Survival:
 						self.bullet.sprite.x, self.bullet.sprite.y
 					):
 
-						invader.hp -= 1
+						invader.hp -= self.bullet.power
 						if(invader.hp <= 0):
 							item_to_remove = i
 						
