@@ -210,6 +210,10 @@ class Survival:
 							invader.sprite.y += 15
 							self.timecount_m = 0
 
+							## Game over when get out of the screen
+							if invader.sprite.y > self.scr_height:
+								self.game_over = True
+
 						self.screen.blit(invader.image, invader.sprite)
 
 			# Remove dead invaders:
@@ -272,6 +276,7 @@ class Survival:
 				else:
 					self.game_over = True
 					self.player.exploding = False
+
 
 			# Remaining lifes
 			pygame.draw.rect(
