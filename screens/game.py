@@ -62,6 +62,8 @@ class Game:
 		# Objects initialisation
 		self.randinvader = ()
 		self.ennemybullet = ()
+		self.ennemybullet_2 = ()
+		self.ennemybullet_3 = ()
 
 		# Invaders
 		self.has_already_chosen = False
@@ -117,11 +119,13 @@ class Game:
 			keys = pygame.key.get_pressed()
 
 			if keys[pygame.K_LEFT]:
-				self.player.sprite.x -= 10
+				if self.player.sprite.x -10 > 0:
+					self.player.sprite.x -= 10
 				if self.player.shooting is False:
 					self.bullet.sprite.x -= 10
 			elif keys[pygame.K_RIGHT]:
-				self.player.sprite.x += 10
+				if self.player.sprite.x + 10 < self.scr_width - 55:
+					self.player.sprite.x += 10
 				if self.player.shooting is False:
 					self.bullet.sprite.x += 10
 			elif keys[pygame.K_SPACE]:
@@ -232,7 +236,14 @@ class Game:
 					width = self.randinvader.sprite.width
 					height = self.randinvader.sprite.height
 					posy = self.randinvader.sprite.y
-					self.ennemybullet =EnnemyBullet((posx + width / 2, posy + height))
+
+					if self.game_level != self.game_level_max:
+						self.ennemybullet =EnnemyBullet((posx + width / 2, posy + height))
+					else:
+						self.ennemybullet =EnnemyBullet((posx + width / 2, posy + height))
+						self.ennemybullet_2 =EnnemyBullet((posx + width , posy + height))
+						self.ennemybullet_3 =EnnemyBullet((posx , posy + height))
+
 				else:
 					self.victory = True
 
@@ -249,15 +260,22 @@ class Game:
 			elif self.timecount < self.nasty_shoot_time and self.has_already_chosen:
 				if self.ennemybullet.sprite.y < self.scr_height:
 					self.ennemybullet.sprite = self.ennemybullet.sprite.move([0, 6])
+					
+					if self.game_level == self.game_level_max:
+						self.ennemybullet_2.sprite = self.ennemybullet_2.sprite.move([2, 6])
+						self.ennemybullet_3.sprite = self.ennemybullet_3.sprite.move([-2, 6])
+					
 					self.screen.blit(self.ennemybullet.image, self.ennemybullet.sprite)
 
+					if self.game_level == self.game_level_max:
+						self.screen.blit(self.ennemybullet_2.image, self.ennemybullet_2.sprite)
+						self.screen.blit(self.ennemybullet_3.image, self.ennemybullet_3.sprite)
 
 
 
 			# Shuttle Displaying and Colision
-			if self.player.sprite.collidepoint(
-				self.ennemybullet.sprite.x, self.ennemybullet.sprite.y
-			) and self.player.exploding is False:
+			## TODO: FIXE BUG COLLISION FOR BOSS
+			if self.player.sprite.collidepoint(self.ennemybullet.sprite.x, self.ennemybullet.sprite.y) and self.player.exploding is False:
 				self.timecount = self.nasty_shoot_time
 				self.has_already_chosen = False
 				self.player.exploding = True
