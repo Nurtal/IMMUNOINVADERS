@@ -6,6 +6,8 @@ from classes.player import Player
 from classes.bullet import Bullet
 from classes.ennemybullet import EnnemyBullet
 from classes.invader import Invader
+from classes.invader2 import Invader2
+from classes.boss import Boss
 from classes.life import Life
 
 pygame.init()
@@ -20,6 +22,10 @@ class Game:
 		self.scr_height = self.screen.get_rect().height
 		self.screen_size = self.scr_width, self.scr_height
 
+		## Level
+		self.game_level = 1
+		self.game_level_max = 5
+
 		# Background Game
 		self.bg = pygame.image.load("resources/images/gamebackground.jpg")
 		self.bg_rect = self.bg.get_rect()
@@ -31,7 +37,8 @@ class Game:
 		# Labels
 		self.font = pygame.font.SysFont(None, 100)
 		self.label_game_over = self.font.render("Game Over", 1, (255, 255, 255))
-		self.label_victory = self.font.render("Victory is yours", 1, (255, 255, 255))
+		self.label_victory = self.font.render("Victoire !", 1, (255, 255, 255))
+		self.label_next_level = self.font.render("Niveau "+str(self.game_level+1)+" !", 1, (255, 255, 255))
 
 		# Life Bar
 		self.lifes = []
@@ -39,7 +46,7 @@ class Game:
 
 		# Invaders
 		self.invaders = []
-		self.invaders_number = 10
+		self.invaders_number = 5
 
 		# Spaceship and bullets
 		self.player = Player(self.screen_size)
@@ -84,7 +91,7 @@ class Game:
 		self.init_x = 10
 		for i in range(self.invaders_number):
 			self.invaders.append(Invader((self.init_x, 10)))
-			self.init_x += 50
+			self.init_x += 100
 
 		# Init life bar
 		self.init_life_x = self.scr_width - 120
@@ -104,8 +111,6 @@ class Game:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					sys.exit()
-
-
 
 			# Keyboard Events
 			keys = pygame.key.get_pressed()
@@ -184,6 +189,11 @@ class Game:
 							invader.sprite.y += 15
 							self.timecount_m = 0
 
+							## Game over when get out of the screen
+							if invader.sprite.y > self.scr_height:
+								self.game_over = True
+
+
 						self.screen.blit(invader.image, invader.sprite)
 
 			# Remove dead invaders:
@@ -257,13 +267,124 @@ class Game:
 				self.screen.blit(life.image, life.sprite)
 
 			if self.victory:
-				self.screen.blit(
-					self.label_victory,
-					(
+				self.game_level += 1
+				self.label_next_level = self.font.render("Niveau "+str(self.game_level)+" !", 1, (255, 255, 255))
+				if(self.game_level <= self.game_level_max):
+					self.screen.blit(self.label_next_level,
+						(
 						self.scr_width / 2 - self.label_victory.get_rect().width / 2,
 						self.scr_height / 2 - self.label_victory.get_rect().height / 2
+						)
 					)
-				)
+				else:
+					self.screen.blit(
+						self.label_victory,
+							(
+							self.scr_width / 2 - self.label_victory.get_rect().width / 2,
+							self.scr_height / 2 - self.label_victory.get_rect().height / 2
+							)
+					)
+
+				pygame.display.flip()
+				pygame.time.delay(1000)
+				
+
+				## Instanciate the new level (ini Invaders)
+
+				## Level 2
+				if(self.game_level == 2):
+					self.init_x = 10
+					self.number_of_ennemy = 8
+
+					for i in range(0, 3):
+						self.invaders.append(Invader((self.init_x, 10)))
+						self.init_x += 55
+					
+					self.invaders.append(Invader2((self.init_x , 10)))
+					self.init_x += 70
+
+					for i in range(6, 7):
+						self.invaders.append(Invader((self.init_x, 10)))
+						self.init_x += 55
+
+					self.invaders.append(Invader2((self.init_x , 10)))
+					self.init_x += 70
+
+					self.invaders.append(Invader((self.init_x, 10)))
+					self.init_x += 55
+					self.invaders.append(Invader((self.init_x, 10)))
+					self.init_x += 55
+					self.invaders.append(Invader((self.init_x, 10)))
+					self.init_x += 55
+
+					## Stay in the loop
+					self.victory = False
+
+				## Level 3
+				if(self.game_level == 3):
+					self.init_x = 10
+					self.number_of_ennemy = 10
+
+					for i in range(0, 4):
+						self.invaders.append(Invader((self.init_x, 10)))
+						self.init_x += 50
+					
+					self.invaders.append(Invader2((self.init_x , 10)))
+					self.init_x += 70
+
+					for i in range(6, 7):
+						self.invaders.append(Invader((self.init_x, 10)))
+						self.init_x += 50
+
+					self.invaders.append(Invader2((self.init_x , 10)))
+					self.init_x += 70
+
+					self.invaders.append(Invader((self.init_x, 10)))
+					self.init_x += 50
+					self.invaders.append(Invader((self.init_x, 10)))
+					self.init_x += 50
+					self.invaders.append(Invader((self.init_x, 10)))
+					self.init_x += 50
+
+					self.invaders.append(Invader2((self.init_x , 10)))
+					self.init_x += 70
+
+					## Stay in the loop
+					self.victory = False
+
+				## Level 4
+				if(self.game_level == 4):
+					self.init_x = 10
+					self.number_of_ennemy = 10
+
+					for i in range(0, self.number_of_ennemy):
+						if(i in [0,2,4,6,8,10]):
+							self.invaders.append(Invader((self.init_x, 10)))
+							self.init_x += 50
+						else:
+							self.invaders.append(Invader2((self.init_x , 10)))
+							self.init_x += 70
+
+					## Stay in the loop
+					self.victory = False
+
+
+				
+				## Level 5
+				if(self.game_level == 5):
+					self.init_x = self.scr_width/2
+					self.invaders.append(Boss((self.init_x , 10)))
+
+					## Stay in the loop
+					self.victory = False
+
+
+				## Finish the game
+				elif(self.game_level == 6):
+					self.victory = True
+
+				
+
 
 			if self.game_over:
 				self.screen.blit(

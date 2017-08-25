@@ -1,3 +1,14 @@
 => Modif victory sound
-=> Create a new level
-=> Create a survival mod
+[DONE] => Create a new level
+[DONE] => Create a survival mod
+=> Allow differents sprites for the player weapon
+=> Update Victory & Display messages
+[DONE] => Export multiple weapons choice from survival to game
+[DONE] => Export game over condition of survival (ennemy get out the screen) to game
+[DONE] => Level design for the game
+=> Associate one type of weapon (ac) to one type of ennemy
+=> Add Invaders
+=> Display level up message
+=> Fluidifier mouvement enemy
+=> Keep the player sprite in the fenetre
+=> Ordonner les scores
