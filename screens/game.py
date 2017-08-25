@@ -69,6 +69,7 @@ class Game:
 		self.nasty_move_time = 1000
 		# Invader shoot duration
 		self.nasty_shoot_time = 1000
+		self.boss_lateral_move = 40
 
 		self.invaders_moving = False
 		self.invader_exploding = False
@@ -187,6 +188,21 @@ class Game:
 					else:
 						if self.invaders_moving and not self.game_over:
 							invader.sprite.y += 15
+
+							## Add a special move for the boss
+							if self.game_level == self.game_level_max:
+								flip_the_coin = randint(0,100)
+								if(flip_the_coin > 50):
+									if invader.sprite.x + self.boss_lateral_move < self.scr_width:
+										invader.sprite.x += self.boss_lateral_move
+									else:
+										invader.sprite.x += -self.boss_lateral_move
+								else:
+									if invader.sprite.x - self.boss_lateral_move > 60:
+										invader.sprite.x += -self.boss_lateral_move
+									else:
+										invader.sprite.x += self.boss_lateral_move
+
 							self.timecount_m = 0
 
 							## Game over when get out of the screen
