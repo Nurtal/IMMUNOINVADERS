@@ -78,7 +78,7 @@ class Game:
 
 		## Weapons
 		self.weapons_list = ["slow", "fast"]
-		self.current_weapon = "slow"
+		self.current_weapon = "fast"
 		self.current_weapon_index = 0
 
 		# Time Variables
@@ -273,15 +273,36 @@ class Game:
 
 
 
-			# Shuttle Displaying and Colision
-			## TODO: FIXE BUG COLLISION FOR BOSS
-			if self.player.sprite.collidepoint(self.ennemybullet.sprite.x, self.ennemybullet.sprite.y) and self.player.exploding is False:
-				self.timecount = self.nasty_shoot_time
-				self.has_already_chosen = False
-				self.player.exploding = True
+			## Collision ad display srpites
+			if self.game_level != self.game_level_max:
+
+				if self.player.sprite.collidepoint(self.ennemybullet.sprite.x, self.ennemybullet.sprite.y) and self.player.exploding is False:
+					self.timecount = self.nasty_shoot_time
+					self.has_already_chosen = False
+					self.player.exploding = True
+				else:
+					self.screen.blit(self.bullet.image, self.bullet.sprite)
+					self.screen.blit(self.player.image, self.player.sprite)
 			else:
-				self.screen.blit(self.bullet.image, self.bullet.sprite)
-				self.screen.blit(self.player.image, self.player.sprite)
+
+				if self.player.sprite.collidepoint(self.ennemybullet.sprite.x, self.ennemybullet.sprite.y) and self.player.exploding is False:
+					self.timecount = self.nasty_shoot_time
+					self.has_already_chosen = False
+					self.player.exploding = True
+
+				elif self.player.sprite.collidepoint(self.ennemybullet_2.sprite.x, self.ennemybullet_2.sprite.y) and self.player.exploding is False:
+					self.timecount = self.nasty_shoot_time
+					self.has_already_chosen = False
+					self.player.exploding = True
+
+				elif self.player.sprite.collidepoint(self.ennemybullet_3.sprite.x, self.ennemybullet_3.sprite.y) and self.player.exploding is False:
+					self.timecount = self.nasty_shoot_time
+					self.has_already_chosen = False
+					self.player.exploding = True
+				else:
+					self.screen.blit(self.bullet.image, self.bullet.sprite)
+					self.screen.blit(self.player.image, self.player.sprite)
+
 
 			# Life Management and Displaying
 			if self.player.exploding:
