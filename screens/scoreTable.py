@@ -22,24 +22,35 @@ class ScoreTable:
 		self.bg_rect = self.bg.get_rect()
 		self.escape_selected = False
 
-		## Get the top 10 scores
-		player_to_score = {}
-		scores_data= open("resources/scores.csv", "r")
-		for line in scores_data:
-			line = line.replace("\n", "")
-			line_in_array = line.split(",")
+		## Get the top scores
+		def scoregame(fname,x):
+			"""
+			@Author:Tiphaine
+			x est le nombre de valeur que l'on veut afficher
+			fonction permettant d'organiser un dictionnaire des valeurs : name, score
+			"""
+			name_to_score = {}
+			data_in_file = open(fname, "r")
+			cmpt = 0
+			for line in data_in_file:
+				if cmpt != 0:
+					line = line.replace("\n", "")
+					line_in_array = line.split(",")
+					name = line_in_array[0]
+					score = int(line_in_array[1])
+					name_to_score[name] = score
+				cmpt += 1
+			data_in_file.close()
+			sorted_scores = sorted(name_to_score.items(), key=lambda t:t[1], reverse = True)
+	
+			#return sorted_scores
+			return sorted_scores[:x]
 
-			if(len(line_in_array) > 1):
-				player_to_score[line_in_array[0]] = line_in_array[1]
-
-		scores_data.close()
-
+		top_scores = scoregame("resources/scores.csv", 5)
 		players_to_display = []
-		for x in range(0,10):
-			max_player = max(player_to_score, key=player_to_score.get)
-			couple = str(max_player)+"   "+str(player_to_score[max_player])
-			players_to_display.append(couple)
-			del player_to_score[max_player]
+		for couple in top_scores:
+			line = str(couple[0])+"   "+str(couple[1])
+			players_to_display.append(line)
 
 		items = tuple(players_to_display)
 		self.score_items = []
