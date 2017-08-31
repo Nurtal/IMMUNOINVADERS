@@ -20,12 +20,16 @@ class GameMenu:
 		self.bg_img_rect = self.bg_img.get_rect()
 
 		# Sound Menu Change
-		self.menu_sound = pygame.mixer.Sound('resources/sounds/menu_noise.wav')
-		self.valid_menu_sound = pygame.mixer.Sound('resources/sounds/menu_valid_sound.wav')
+		self.audio_activate = True
+		try:
+			self.menu_sound = pygame.mixer.Sound('resources/sounds/menu_noise.wav')
+			self.valid_menu_sound = pygame.mixer.Sound('resources/sounds/menu_valid_sound.wav')
 
-		# Menu Music
-		self.menu_music = pygame.mixer.music.load('resources/sounds/music.mp3')
-		pygame.mixer.music.set_volume(0.5)
+			# Menu Music
+			self.menu_music = pygame.mixer.music.load('resources/sounds/music.mp3')
+			pygame.mixer.music.set_volume(0.5)
+		except:
+			self.audio_activate = False
 
 		# Main Menu
 		self.clock = pygame.time.Clock()
@@ -67,9 +71,10 @@ class GameMenu:
 			# Limit frame speed to 50 FPS
 			# self.clock.tick(20)
 
-			if not pygame.mixer.music.get_busy():
-				pygame.mixer.music.rewind()
-				pygame.mixer.music.play()
+			if self.audio_activate:
+				if not pygame.mixer.music.get_busy():
+					pygame.mixer.music.rewind()
+					pygame.mixer.music.play()
 
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -77,19 +82,22 @@ class GameMenu:
 					sys.exit()
 				elif event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_UP:
-						self.menu_sound.play()
+						if self.audio_activate:
+							self.menu_sound.play()
 						for index, item in enumerate(self.menu_items):
 							if self.current_item[0] == item[0]:
 								if self.index_selected > 0:
 									self.index_selected -= 1
 					if event.key == pygame.K_DOWN:
-						self.menu_sound.play()
+						if self.audio_activate:
+							self.menu_sound.play()
 						for index, item in enumerate(self.menu_items):
 							if self.current_item[0] == item[0]:
 								if self.index_selected < (len(self.menu_items) - 1):
 									self.index_selected += 1
 					if event.key == pygame.K_RETURN:
-						self.valid_menu_sound.play()
+						if self.audio_activate:
+							self.valid_menu_sound.play()
 						if len(self.current_item) > 0:
 							if self.current_item[0] == "Start":
 								self.start_selected = True
@@ -106,7 +114,8 @@ class GameMenu:
 							elif self.current_item[0] == "Quit":
 								self.quit_select = True
 
-							pygame.mixer.music.fadeout(1000)
+							if self.audio_activate:
+								pygame.mixer.music.fadeout(1000)
 							mainloop = False
 
 			self.current_item = self.menu_items[self.index_selected]

@@ -14,6 +14,7 @@
 [DONE]=> Ordonner les scores
 [DONE] => lateral movement for the boss
 => Select the player sprite
-=> Debug sond
+[DONE] => Debug sond
 => Appliquer modif pas de sortie de screen pour Survival
 => Debug sortie screen pour AC
+=> Add bonus (life)

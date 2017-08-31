@@ -31,8 +31,13 @@ class Game:
 		self.bg_rect = self.bg.get_rect()
 
 		# Sound Game
-		self.laser_sound = pygame.mixer.Sound('resources/sounds/laser_shot.wav')
-		self.laser_sound.set_volume(0.2)
+		self.audio_activate = True
+		try:
+			self.laser_sound = pygame.mixer.Sound('resources/sounds/laser_shot.wav')
+			self.laser_sound.set_volume(0.2)
+		except:
+			self.audio_activate = False
+
 
 		# Labels
 		self.font = pygame.font.SysFont(None, 100)
@@ -143,11 +148,14 @@ class Game:
 				# Go back to the game menu
 				mainloop = False
 				self.escape_selected = True
-				pygame.mixer.music.rewind()
+
+				if self.audio_activate:
+					pygame.mixer.music.rewind()
 
 
 			if self.player.shoot is True:
-				self.laser_sound.play()
+				if self.audio_activate:
+					self.laser_sound.play()
 
 				if self.bullet.sprite.y > 0 and self.invader_exploding is False:
 					self.player.shooting = True
@@ -157,7 +165,8 @@ class Game:
 						self.bullet.sprite = self.bullet.sprite.move([0, -14])
 
 				else:
-					self.laser_sound.fadeout(1000)
+					if self.audio_activate:
+						self.laser_sound.fadeout(1000)
 					self.bullet.sprite.x, self.bullet.sprite.y = (
 						self.player.sprite.x + self.player.sprite.width / 2, self.player.sprite.y
 					)
@@ -454,5 +463,5 @@ class Game:
 			pygame.display.flip()
 
 			if self.game_over or self.victory:
-				pygame.time.delay(4000)
+				pygame.time.delay(2000)
 				mainloop = False
