@@ -11,6 +11,9 @@
 [DONE] => Display level up message
 => Fluidifier mouvement enemy
 [DONE]=> Keep the player sprite in the fenetre
-[IN PROGRESS]=> Ordonner les scores
+[DONE]=> Ordonner les scores
 [DONE] => lateral movement for the boss
 => Select the player sprite
+=> Debug sond
+=> Appliquer modif pas de sortie de screen pour Survival
+=> Debug sortie screen pour AC
