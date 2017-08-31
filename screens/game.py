@@ -73,10 +73,10 @@ class Game:
 		# Invaders
 		self.has_already_chosen = False
 		# Go down every second
-		self.nasty_move_time = 1000
+		self.nasty_move_time = 10
 		# Invader shoot duration
 		self.nasty_shoot_time = 1000
-		self.boss_lateral_move = 40
+		self.boss_lateral_move = 1
 
 		self.invaders_moving = False
 		self.invader_exploding = False
@@ -200,7 +200,7 @@ class Game:
 						self.invader_exploding = True	
 					else:
 						if self.invaders_moving and not self.game_over:
-							invader.sprite.y += 15
+							invader.sprite.y += 1 
 
 							## Add a special move for the boss
 							if self.game_level == self.game_level_max:
