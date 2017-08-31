@@ -18,3 +18,5 @@
 => Appliquer modif pas de sortie de screen pour Survival
 => Debug sortie screen pour AC
 => Add bonus (life)
+=> Improve the boss trajectory
+=> Decale x coordinates

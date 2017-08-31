@@ -138,13 +138,15 @@ class Survival:
 			keys = pygame.key.get_pressed()
 
 			if keys[pygame.K_LEFT]:
-				self.player.sprite.x -= 10
-				if self.player.shooting is False:
-					self.bullet.sprite.x -= 10
+				if self.player.sprite.x -10 > 0:
+					self.player.sprite.x -= 10
+					if self.player.shooting is False:
+						self.bullet.sprite.x -= 10
 			elif keys[pygame.K_RIGHT]:
-				self.player.sprite.x += 10
-				if self.player.shooting is False:
-					self.bullet.sprite.x += 10
+				if self.player.sprite.x + 10 < self.scr_width - 55:
+					self.player.sprite.x += 10
+					if self.player.shooting is False:
+						self.bullet.sprite.x += 10
 			elif keys[pygame.K_SPACE]:
 				self.player.shoot = True
 			elif keys[pygame.K_RSHIFT]:
