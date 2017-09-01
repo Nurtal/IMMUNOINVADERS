@@ -11,7 +11,7 @@ pygame.init()
 # set_mode(resolution=(width, height), flags=0, depth=0)
 # flags : collection of qdditional options
 # depth : number of bits use for colors
-screen = pygame.display.set_mode((640, 480), 0, 32)
+screen = pygame.display.set_mode((640, 780), 0, 32)
 bg_color = (0, 0, 0)
 
 # Game Menu
