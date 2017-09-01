@@ -13,3 +13,4 @@ class Boss(GameObject):
         super(Boss, self).__init__("./resources/images/Boss.png")
         self.init_pos(pos)
         self.hp = 8
+        self.speed = 2
