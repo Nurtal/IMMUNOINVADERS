@@ -16,7 +16,7 @@ class GameMenu:
 
 		# Background Main Menu
 		self.bg_color = bg_color
-		self.bg_img = pygame.image.load('resources/images/menubackground.jpg')
+		self.bg_img = pygame.image.load('resources/images/menu2.jpg')
 		self.bg_img_rect = self.bg_img.get_rect()
 
 		# Sound Menu Change

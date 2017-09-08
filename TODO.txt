@@ -23,5 +23,7 @@
 [DONE] => differents speed for ennemy
 => Increase player fire rate
 => rotate ennemy sprite
-=> enlarge the dimmension of the screen
-=> Apply modif to the survival mode
+=> enlarge the dimmension of the play screen
+=> enlarge  the dimmension of the menu screen
+[DONE] => Apply modif to the survival mode
+=> Allow multiple fire
