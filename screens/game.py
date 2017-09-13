@@ -27,7 +27,7 @@ class Game:
 		self.game_level_max = 5
 
 		# Background Game
-		self.bg = pygame.image.load("resources/images/gamebackground.jpg")
+		self.bg = pygame.image.load("resources/images/game_bg_origin.jpeg")
 		self.bg_rect = self.bg.get_rect()
 
 		# Sound Game
@@ -58,7 +58,15 @@ class Game:
 		self.init_pos_bullet = (
 			self.player.sprite.x + self.player.sprite.width / 2, self.player.sprite.y
 		)
+
 		self.bullet = Bullet(self.init_pos_bullet)
+		
+
+		## Multiple bullets [TEST]
+		self.bullets_fired = []
+		self.max_bullets = 10
+		
+		
 
 		self.game_over = False
 		self.victory = False
@@ -75,7 +83,7 @@ class Game:
 		# Go down every second
 		self.nasty_move_time = 10
 		# Invader shoot duration
-		self.nasty_shoot_time = 1500
+		self.nasty_shoot_time = 3000
 		self.boss_lateral_move = 1
 
 		self.invaders_moving = False
@@ -96,7 +104,7 @@ class Game:
 		self.timecount = 0
 
 		# Init Invaders
-		self.init_x = 10
+		self.init_x = 75
 		for i in range(self.invaders_number):
 			self.invaders.append(Invader((self.init_x, 10)))
 			self.init_x += 100
@@ -157,12 +165,23 @@ class Game:
 				if self.audio_activate:
 					self.laser_sound.play()
 
+				"""
+				## Multiple bullets [TEST]
+				if(len(self.bullets_fired) <= self.max_bullets):
+					print("tardis")
+					self.init_pos_bullet = (self.player.sprite.x + self.player.sprite.width / 2, self.player.sprite.y)
+					self.bullets_fired.append(Bullet(self.init_pos_bullet))
+				for ac in self.bullets_fired:
+					self.player.shooting = True
+					ac.sprite = ac.sprite.move([0, -14])
+				"""
+
 				if self.bullet.sprite.y > 0 and self.invader_exploding is False:
 					self.player.shooting = True
 					if self.current_weapon == "slow":
 						self.bullet.sprite = self.bullet.sprite.move([0, -5])
 					elif self.current_weapon == "fast":
-						self.bullet.sprite = self.bullet.sprite.move([0, -14])
+						self.bullet.sprite = self.bullet.sprite.move([0, -18])
 
 				else:
 					if self.audio_activate:
@@ -267,18 +286,18 @@ class Game:
 				self.has_already_chosen = False
 
 			elif self.timecount < self.nasty_shoot_time and self.has_already_chosen:
-				if self.ennemybullet.sprite.y < self.scr_height:
-					self.ennemybullet.sprite = self.ennemybullet.sprite.move([0, 6])
+				if self.ennemybullet.sprite.y <= self.scr_height:
 					
 					if self.game_level == self.game_level_max:
+						self.ennemybullet.sprite = self.ennemybullet.sprite.move([0, 6])
 						self.ennemybullet_2.sprite = self.ennemybullet_2.sprite.move([2, 6])
 						self.ennemybullet_3.sprite = self.ennemybullet_3.sprite.move([-2, 6])
-					
-					self.screen.blit(self.ennemybullet.image, self.ennemybullet.sprite)
-
-					if self.game_level == self.game_level_max:
+						self.screen.blit(self.ennemybullet.image, self.ennemybullet.sprite)
 						self.screen.blit(self.ennemybullet_2.image, self.ennemybullet_2.sprite)
 						self.screen.blit(self.ennemybullet_3.image, self.ennemybullet_3.sprite)
+					else:
+						self.ennemybullet.sprite = self.ennemybullet.sprite.move([0, 6])
+						self.screen.blit(self.ennemybullet.image, self.ennemybullet.sprite)
 
 
 

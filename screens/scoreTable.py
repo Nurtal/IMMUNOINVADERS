@@ -18,7 +18,7 @@ class ScoreTable:
 		self.font = pygame.font.SysFont(font, font_size)
 
 		# Background Game
-		self.bg = pygame.image.load('resources/images/menubackground.jpg')
+		self.bg = pygame.image.load('resources/images/game_bg_origin.jpeg')
 		self.bg_rect = self.bg.get_rect()
 		self.escape_selected = False
 
@@ -46,7 +46,7 @@ class ScoreTable:
 			#return sorted_scores
 			return sorted_scores[:x]
 
-		top_scores = scoregame("resources/scores.csv", 5)
+		top_scores = scoregame("resources/scores.csv", 10)
 		players_to_display = []
 		for couple in top_scores:
 			line = str(couple[0])+"   "+str(couple[1])

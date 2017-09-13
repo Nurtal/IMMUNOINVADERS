@@ -29,7 +29,7 @@ class Survival:
 		self.screen_size = self.scr_width, self.scr_height
 
 		# Background Game
-		self.bg = pygame.image.load("resources/images/gamebackground.jpg")
+		self.bg = pygame.image.load("resources/images/game_bg_origin.jpeg")
 		self.bg_rect = self.bg.get_rect()
 
 		# Sound Game
@@ -74,7 +74,7 @@ class Survival:
 		# Invaders
 		self.has_already_chosen = False
 		# Go down every second
-		self.nasty_move_time = 1000
+		self.nasty_move_time = 1
 		# Invader shoot duration
 		self.nasty_shoot_time = 1000
 
@@ -83,7 +83,7 @@ class Survival:
 
 		## Weapons
 		self.weapons_list = ["slow", "fast"]
-		self.current_weapon = "slow"
+		self.current_weapon = "fast"
 		self.current_weapon_index = 0
 
 		# Time Variables
@@ -138,15 +138,15 @@ class Survival:
 			keys = pygame.key.get_pressed()
 
 			if keys[pygame.K_LEFT]:
-				if self.player.sprite.x -10 > 0:
-					self.player.sprite.x -= 10
+				if self.player.sprite.x -20 > 0:
+					self.player.sprite.x -= 20
 					if self.player.shooting is False:
-						self.bullet.sprite.x -= 10
+						self.bullet.sprite.x -= 20
 			elif keys[pygame.K_RIGHT]:
-				if self.player.sprite.x + 10 < self.scr_width - 55:
-					self.player.sprite.x += 10
+				if self.player.sprite.x + 20 < self.scr_width - 55:
+					self.player.sprite.x += 20
 					if self.player.shooting is False:
-						self.bullet.sprite.x += 10
+						self.bullet.sprite.x += 20
 			elif keys[pygame.K_SPACE]:
 				self.player.shoot = True
 			elif keys[pygame.K_RSHIFT]:
@@ -175,7 +175,7 @@ class Survival:
 						self.bullet.sprite = self.bullet.sprite.move([0, -5])
 						self.bullet.power = 2
 					elif self.current_weapon == "fast":
-						self.bullet.sprite = self.bullet.sprite.move([0, -14])
+						self.bullet.sprite = self.bullet.sprite.move([0, -25])
 						self.bullet.power = 1
 				else:
 					if self.audio_activate:
@@ -216,7 +216,7 @@ class Survival:
 
 					else:
 						if self.invaders_moving and not self.game_over:
-							invader.sprite.y += 15
+							invader.sprite.y += invader.speed
 							self.timecount_m = 0
 
 							## Game over when get out of the screen
@@ -245,6 +245,7 @@ class Survival:
 					width = self.randinvader.sprite.width
 					height = self.randinvader.sprite.height
 					posy = self.randinvader.sprite.y
+
 					self.ennemybullet =EnnemyBullet((posx + width / 2, posy + height))
 				else:
 					self.victory = True
@@ -260,7 +261,22 @@ class Survival:
 
 			elif self.timecount < self.nasty_shoot_time and self.has_already_chosen:
 				if self.ennemybullet.sprite.y < self.scr_height:
-					self.ennemybullet.sprite = self.ennemybullet.sprite.move([0, 6])
+
+					lateral_move = 0
+					flip_the_coin = randint(0,100)
+					if(flip_the_coin >= 45):
+						if(self.ennemybullet.sprite.y + 12 < self.scr_width - 10):
+							lateral_move = 12
+						else:
+							lateral_move = -12
+
+					if(flip_the_coin >= 65):
+						if(self.ennemybullet.sprite.y - 12 > 10):
+							lateral_move = -12
+						else:
+							lateral_move = 12
+
+					self.ennemybullet.sprite = self.ennemybullet.sprite.move([lateral_move, 17])
 					self.screen.blit(self.ennemybullet.image, self.ennemybullet.sprite)
 
 
