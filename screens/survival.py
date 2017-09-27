@@ -35,6 +35,8 @@ class Survival:
 		# Sound Game
 		self.audio_activate = True
 		try:
+			self.victory_sound = pygame.mixer.Sound('resources/sounds/victory.wav')
+			self.victory_sound.set_volume(0.2)
 			self.laser_sound = pygame.mixer.Sound('resources/sounds/laser_shot.wav')
 			self.laser_sound.set_volume(0.2)
 		except:
@@ -313,6 +315,11 @@ class Survival:
 
 			if self.victory:
 			
+				## TODO : add victory sound
+				if self.audio_activate:
+						self.victory_sound.play()
+
+
 				# New wave messages
 				self.screen.blit(
 					self.label_new_wave,

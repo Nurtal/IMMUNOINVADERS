@@ -33,6 +33,7 @@ class Game:
 		# Sound Game
 		self.audio_activate = True
 		try:
+			self.victory_sound = pygame.mixer.Sound('resources/sounds/victory.wav')
 			self.laser_sound = pygame.mixer.Sound('resources/sounds/laser_shot.wav')
 			self.laser_sound.set_volume(0.2)
 		except:
@@ -77,6 +78,8 @@ class Game:
 		self.ennemybullet = ()
 		self.ennemybullet_2 = ()
 		self.ennemybullet_3 = ()
+		self.boss_deplacement_vector = []
+		self.position_in_deplacement_vector = 0
 
 		# Invaders
 		self.has_already_chosen = False
@@ -108,6 +111,7 @@ class Game:
 		for i in range(self.invaders_number):
 			self.invaders.append(Invader((self.init_x, 10)))
 			self.init_x += 100
+
 
 		# Init life bar
 		self.init_life_x = self.scr_width - 120
@@ -195,7 +199,6 @@ class Game:
 					self.invader_exploding = False
 
 
-
 			item_to_remove = None
 
 			# Invader Colision + Vertical Movement
@@ -221,19 +224,46 @@ class Game:
 						if self.invaders_moving and not self.game_over:
 							invader.sprite.y += invader.speed
 
-							## Add a special move for the boss
+							## Add a special move for the Boss
 							if self.game_level == self.game_level_max:
-								flip_the_coin = randint(0,100)
-								if(flip_the_coin > 50):
-									if invader.sprite.x + self.boss_lateral_move < self.scr_width:
+
+								## Check if deplacement vector is empty, and if index in vector
+								## is not larger than the len of vector (i.e test if vector is initialized and
+								## if we already use all position in vector)
+								## create one if true, use coordinates if false
+								if(len(self.boss_deplacement_vector) > 0 and self.position_in_deplacement_vector < len(self.boss_deplacement_vector)):
+									deplacement_instruction = self.boss_deplacement_vector[self.position_in_deplacement_vector]
+									if(deplacement_instruction == "right"):
 										invader.sprite.x += self.boss_lateral_move
 									else:
 										invader.sprite.x += -self.boss_lateral_move
+
+									self.position_in_deplacement_vector += 1
+
+								## Create a new vector
 								else:
-									if invader.sprite.x - self.boss_lateral_move > 60:
-										invader.sprite.x += -self.boss_lateral_move
+									vector_len = randint(15,45)
+									direction = randint(0,100)
+									boss_position = invader.sprite.x
+									self.boss_deplacement_vector = []
+									self.position_in_deplacement_vector = 0
+									
+									## Go right if possible
+									if(direction > 50):
+										for x in range(0, vector_len):
+											if boss_position + self.boss_lateral_move < self.scr_width:
+												self.boss_deplacement_vector.append("right")
+												boss_position += self.boss_lateral_move
+											else:
+												self.boss_position.append("left")
+									## Go left if possible
 									else:
-										invader.sprite.x += self.boss_lateral_move
+										for x in range(0, vector_len):
+											if boss_position - self.boss_lateral_move > 60:
+												self.boss_deplacement_vector.append("left")
+												boss_position += - self.boss_lateral_move
+											else:
+												self.boss_position.append("right")
 
 							self.timecount_m = 0
 
@@ -288,6 +318,7 @@ class Game:
 			elif self.timecount < self.nasty_shoot_time and self.has_already_chosen:
 				if self.ennemybullet.sprite.y <= self.scr_height:
 					
+					## Multiple ennemy fire for the Boss
 					if self.game_level == self.game_level_max:
 						self.ennemybullet.sprite = self.ennemybullet.sprite.move([0, 6])
 						self.ennemybullet_2.sprite = self.ennemybullet_2.sprite.move([2, 6])
@@ -350,6 +381,11 @@ class Game:
 				self.screen.blit(life.image, life.sprite)
 
 			if self.victory:
+
+				## Victory music
+				if self.audio_activate:
+					self.victory_sound.play()
+
 				self.game_level += 1
 				self.label_next_level = self.font.render("Niveau "+str(self.game_level)+" !", 1, (255, 255, 255))
 				if(self.game_level <= self.game_level_max):
@@ -372,7 +408,9 @@ class Game:
 				pygame.time.delay(1000)
 				
 
-				## Instanciate the new level (ini Invaders)
+				##-------------------------------------------##
+				## Instanciate the new level (init Invaders) ##
+				##-------------------------------------------##
 
 				## Level 2
 				if(self.game_level == 2):
@@ -450,7 +488,6 @@ class Game:
 
 					## Stay in the loop
 					self.victory = False
-
 
 				
 				## Level 5
