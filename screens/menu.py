@@ -40,7 +40,7 @@ class GameMenu:
 
 		self.start_selected = False
 		self.survival_selected = False
-		self.settings_selected = False
+		#self.settings_selected = False
 		self.scores_selected = False
 		self.quit_select = False
 
@@ -99,19 +99,16 @@ class GameMenu:
 						if self.audio_activate:
 							self.valid_menu_sound.play()
 						if len(self.current_item) > 0:
-							if self.current_item[0] == "Start":
+							if self.current_item[0] == "Jouer":
 								self.start_selected = True
 
-							elif self.current_item[0] == "Survival":
+							elif self.current_item[0] == "Survie":
 								self.survival_selected = True
-
-							elif self.current_item[0] == "Settings":
-								self.settings_selected = True
 
 							elif self.current_item[0] == "Scores":
 								self.scores_selected = True
 
-							elif self.current_item[0] == "Quit":
+							elif self.current_item[0] == "Quitter":
 								self.quit_select = True
 
 							if self.audio_activate:
@@ -123,7 +120,7 @@ class GameMenu:
 			# Redraw the background
 			self.screen.fill(self.bg_color)
 
-			if not self.start_selected or not self.settings_selected:
+			if not self.start_selected:
 				self.screen.blit(self.bg_img, self.bg_img_rect)
 
 				for name, label, (width, height), (posx, posy) in self.menu_items:

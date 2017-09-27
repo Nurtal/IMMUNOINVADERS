@@ -16,7 +16,7 @@ bg_color = (0, 0, 0)
 
 # Game Menu
 pygame.display.set_caption('Game Menu')
-menu_items = ('Start','Survival','Scores','Quit')
+menu_items = ('Jouer','Survie','Scores','Quitter')
 
 # Views initialization
 gm = GameMenu(screen, menu_items)
@@ -60,14 +60,7 @@ while mainloop:
 		gm.settings_selected = False
 		gm.scores_selected = False
 
-	"""
-	if gm.settings_selected:
-		gs.run()
-		gm.start_selected = False
-		gm.survival_selected = False
-		gm.scores_selceted = False
-		gm.settings_selected = False
-	"""
+	
 
 	if gm.quit_select is True:
 		mainloop = False

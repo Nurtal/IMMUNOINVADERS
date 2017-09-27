@@ -25,11 +25,12 @@
 [DONE]=> Change ac sprite for survival mode
 [DONE]=> Increase player fire rate
 [DONE]=> Virer Settings
-[DONE] => Swap color ennemy bullet
-=> Add bonus (life)
-=> Allow multiple fire
-=> Enlarge bullet sprite
-=> Add Credits
+[DONE]=> Swap color ennemy bullet
+[DONE]=> Enlarge bullet sprite
+[DONE]=> Translate title in french
+[DELAY]=> Add bonus (life)
+[DELAY]=> Allow multiple fire
+[DELAY]=> Add Credits
 [DELAY]=> Add friendly cell firing cytolines (life bonus)
 [DELAY]=> Allow differents sprites for the player weapon
 [DELAY]=> Associate one type of weapon (ac) to one type of ennemy
