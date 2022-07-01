@@ -61,13 +61,13 @@ class Game:
 		)
 
 		self.bullet = Bullet(self.init_pos_bullet)
-		
+
 
 		## Multiple bullets [TEST]
 		self.bullets_fired = []
 		self.max_bullets = 10
-		
-		
+
+
 
 		self.game_over = False
 		self.victory = False
@@ -148,14 +148,14 @@ class Game:
 			elif keys[pygame.K_SPACE]:
 				self.player.shoot = True
 			elif keys[pygame.K_RSHIFT]:
-				
+
 				number_of_weapon = len(self.weapons_list)
 				if(self.current_weapon_index == number_of_weapon-1):
 					self.current_weapon_index = 0
 				else:
-					self.current_weapon_index += 1				
+					self.current_weapon_index += 1
 				self.current_weapon = self.weapons_list[self.current_weapon_index]
-			
+
 			elif keys[pygame.K_ESCAPE]:
 				# Go back to the game menu
 				mainloop = False
@@ -218,8 +218,8 @@ class Game:
 						invader.hp -= 1
 						if(invader.hp <= 0):
 							item_to_remove = i
-						
-						self.invader_exploding = True	
+
+						self.invader_exploding = True
 					else:
 						if self.invaders_moving and not self.game_over:
 							invader.sprite.y += invader.speed
@@ -247,7 +247,7 @@ class Game:
 									boss_position = invader.sprite.x
 									self.boss_deplacement_vector = []
 									self.position_in_deplacement_vector = 0
-									
+
 									## Go right if possible
 									if(direction > 50):
 										for x in range(0, vector_len):
@@ -317,7 +317,7 @@ class Game:
 
 			elif self.timecount < self.nasty_shoot_time and self.has_already_chosen:
 				if self.ennemybullet.sprite.y <= self.scr_height:
-					
+
 					## Multiple ennemy fire for the Boss
 					if self.game_level == self.game_level_max:
 						self.ennemybullet.sprite = self.ennemybullet.sprite.move([0, 6])
@@ -406,7 +406,7 @@ class Game:
 
 				pygame.display.flip()
 				pygame.time.delay(1000)
-				
+
 
 				##-------------------------------------------##
 				## Instanciate the new level (init Invaders) ##
@@ -420,7 +420,7 @@ class Game:
 					for i in range(0, 3):
 						self.invaders.append(Invader((self.init_x, 10)))
 						self.init_x += 55
-					
+
 					self.invaders.append(Invader2((self.init_x , 10)))
 					self.init_x += 70
 
@@ -449,7 +449,7 @@ class Game:
 					for i in range(0, 4):
 						self.invaders.append(Invader((self.init_x, 10)))
 						self.init_x += 50
-					
+
 					self.invaders.append(Invader2((self.init_x , 10)))
 					self.init_x += 70
 
@@ -489,7 +489,7 @@ class Game:
 					## Stay in the loop
 					self.victory = False
 
-				
+
 				## Level 5
 				if(self.game_level == 5):
 					self.init_x = self.scr_width/2
@@ -503,7 +503,7 @@ class Game:
 				elif(self.game_level == 6):
 					self.victory = True
 
-				
+
 
 
 			if self.game_over:
