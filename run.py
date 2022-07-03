@@ -16,7 +16,7 @@ bg_color = (0, 0, 0)
 
 # Game Menu
 pygame.display.set_caption('Game Menu')
-menu_items = ('Jouer','Survie','Scores','Quitter')
+menu_items = ('Jouer','Survie','Options','Scores','Quitter')
 
 # Views initialization
 gm = GameMenu(screen, menu_items)
@@ -40,6 +40,7 @@ while mainloop:
 		g.run()
 		gm.start_selected = False
 		gm.survival_selected = False
+		gm.setting_selected = False
 		gm.scores_selcted = False
 		gm.quit_select = False
 
@@ -49,6 +50,17 @@ while mainloop:
 		gsu.run()
 		gm.start_selected = False
 		gm.survival_selected = False
+		gm.setting_selected = False
+		gm.scores_selected = False
+		gm.quit_select = False
+
+	if gm.setting_selected:
+		pygame.display.set_caption('Options')
+		gsu = GameSettings(screen)
+		gsu.run()
+		gm.start_selected = False
+		gm.survival_selected = False
+		gm.setting_selected = False
 		gm.scores_selected = False
 		gm.quit_select = False
 
@@ -57,10 +69,11 @@ while mainloop:
 		gs.run()
 		gm.start_selected = False
 		gm.survival_selected = False
-		gm.settings_selected = False
+		gm.setting_selected = False
 		gm.scores_selected = False
+		gm.quit_select = False
 
-	
+
 
 	if gm.quit_select is True:
 		mainloop = False
